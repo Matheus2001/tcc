@@ -1,0 +1,264 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title> Testando </title>
+    <link rel-6.856759="shortcut icon" href=https://store-guides2.djicdn.com/guides/wp-content/uploads/2018/08/B8725926-2-696x464.jpg type="image/x-icon" />
+ <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/menu.css"
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/2.11/lib/OpenLayers.js"></script>
+
+ </head>
+  <body>
+
+<div id="vizualizacao"></div>
+ <div id="scale-line" class="scale-line"></div>
+ 
+ 
+
+    <div class="meu-container">
+      <header>
+
+
+    <script>
+   //codigo do mapa
+    
+       map = null;
+       var markers= null;
+    var srcX = 0;
+  var srcY = 0;
+  var size = 300;
+
+       lon = -35.470283;
+       lat = -6.856759;
+      function init() {//mapa
+        map = new OpenLayers.Map("mapdiv"); //mapa
+        var mapnik = new OpenLayers.Layer.OSM(); //mapa
+        map.addLayer(mapnik); //mapa
+  map.onload = looping();
+
+
+      }
+   
+   function render(){//desenha os elementos na tela
+  
+ }
+
+ function update(){//atualiza elemento
+  
+   }
+    window.addEventListener("keydown",keydownHandler,false);
+  window.addEventListener("keyup",keyupHandler,false);
+
+   
+   function looping(){//função que se repete 60x por segundo
+  requestAnimationFrame(looping,map);
+  update();//processa a interação
+  render();//desenha o mapa atualizado na tela
+ }
+   
+   
+   function keydownHandler(e){//função disparada quando uma tecla é pressionada
+  var key = e.keyCode;
+  switch(key){
+   case LEFT:
+    mvLeft = true;
+    break;
+   case RIGHT:
+    mvRight = true;
+    break;
+   case UP:
+    mvUp = true;
+    break;
+   case DOWN:
+    mvDown = true;
+    break;
+   case PGDOWN:
+    zoomOut = true;
+    break;
+   case PGUP:
+    zoomIn = true;
+    break;
+  }
+ }
+	
+ function keyupHandler(e){//função disparada quando uma tecla é liberada
+  var key = e.keyCode;
+  switch(key){
+   case LEFT:
+    mvLeft = false;
+    break;
+   case RIGHT:
+    mvRight = false;
+    break;
+   case UP:
+    mvUp = false;
+    break;
+   case DOWN:
+    mvDown = false;
+    break;
+   case PGDOWN:
+    zoomOut = false;
+    break;
+   case PGUP:
+    zoomIn = false;
+    break;
+  }
+ }
+
+
+ function exibeMensagem(){
+
+ var intervalo = window.setInterval(function() {
+  https://static.thenounproject.com/png/156824-200.png
+     if (markers != null){
+       markers.destroy();
+     }
+    markers = new OpenLayers.Layer.Markers( "Markers" );
+   map.addLayer(markers);
+  //tamanho
+    var size = new OpenLayers.Size(30,30);
+  //deslocamento
+     var offset = new OpenLayers.Pixel(-(size.w/4), -size.h);
+  //icone - D
+     var icon = new OpenLayers.Icon('https://static.thenounproject.com/png/156824-200.png', size, offset);
+
+
+     // corpo da funcao
+                //alert('Vai na latitude');
+  class Localizacao {
+    constructor(longitude, latitude) {
+      this.longitude = longitude;
+      this.latitude = latitude;
+                }
+    get longi(){
+      return this.longitude;
+    }
+    get lati(){
+      return this.lati;
+    }
+              }
+        var lonlat = null;
+  for(i=0;i<8;i++){
+                if(i%2==0){
+   lat = lat + 0.00002;// + i;
+       //lon = lon + 0.0030;// + i;
+  }else{
+   //lat = lat + 0.0030;// + i;
+       //lon = lon + 0.0002;// + i;
+  }
+  
+  
+
+
+  lonlat = new OpenLayers.LonLat(lon, lat).transform(
+      new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+      new OpenLayers.Projection("EPSG:900913") // to Spherical Mercator
+  );
+
+
+     markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(0,0),icon));
+   markers.addMarker(new OpenLayers.Marker(new OpenLayers.LonLat(0,0),icon.clone()));
+         marker = new OpenLayers.Marker(lonlat,icon.clone());
+
+  markers.addMarker(marker);
+
+ }
+
+ var zoom = 14;
+        map.setCenter(lonlat, zoom);
+ }, 300);
+
+     
+
+ // quem está mechendo é a imagem, e não o objeto(precisa mudar)
+ window.setTimeout(function() {
+     clearInterval(intervalo);
+ }, 300); // 30000 - a imagem muda. 300- o Drone congela mas você consegue mover a imagem
+ }
+    </script>
+
+  <style>
+    #mapdiv { width:100%; height:600px; }
+    div.olControlAttribution { bottom:8px; }
+    </style>
+
+
+  </head>
+  <body>
+    <div class="meu-container">
+      <header>
+
+       <!-- Imagem e texto -->
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+    <img src="https://image.flaticon.com/icons/png/512/41/41831.png" width="40" height="40" class="d-inline-block align-top" alt="">
+    Simulação virtual
+  </a>
+</nav>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="menu.html">Pagina Inicial</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="visualizacao.html">Simulação <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Desenvolvimento
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="https://openstreetmap.org">API Opeen Strat Maps</a>
+
+<a class="dropdown-item" href="https://openlayers.org/en/latest/apidoc/">API Blibioteca Openlayers</a>
+
+          <a class="dropdown-item" href="https://getbootstrap.com/">Bootstrap</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="objetivo.html" >objetivo</a>
+        </div>
+      </li>
+      <li class="nav-item">
+
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
+    </form>
+
+            </div>
+          </div>
+        </nav>
+      </header>
+
+   </header>
+      <main>
+
+        </div>
+
+
+<body onload="init();exibeMensagem();">
+
+    <div id="mapdiv"></div>
+
+  </form>
+      </main>
+      <footer>
+        <div class="col-12">
+          <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> - Direitos Reservados - Desenvolvido por Matheus Nascimento e Maria Vitória.</p>
+        </div>
+      </footer>
+      </div>
+
+</body>
+</html>
